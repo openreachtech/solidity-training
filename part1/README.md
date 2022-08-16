@@ -9,16 +9,13 @@
 
 ## 1. ブロックチェーンを起動
 Solidityが書けるエンジニアではなく、ブロックチェーンエンジニアになるために、まずはブロックチェーンを起動できるようになります。
-
-GethというEthereumのコントラクトを実行する環境を、公式サイトに従ってダウンロードします。
-[Installing Geth](https://geth.ethereum.org/docs/install-and-build/installing-geth#macos-via-homebrew)
+まずは、GethというEthereumのコントラクトを実行する環境を、[公式サイト](https://geth.ethereum.org/docs/install-and-build/installing-geth#macos-via-homebrew)に従ってダウンロードします
 ```sh
 # gethがインストールされたか確認
 geth version
 ```
 
-The Merge以前は、Gethがコンセンサスも担当していましたが、The Merge以降は、コントラクトの実行だけを担います。
-[The Merge](https://geth.ethereum.org/docs/interface/merge)
+[The Merge](https://geth.ethereum.org/docs/interface/merge)以前は、Gethがコンセンサスも担当していましたが、The Merge以降は、コントラクトの実行だけを担います。
 
 ローカルでのプライベートなEthereumネットワークをプライベートネットといいます。
 ブライベートネットの設定ファイルを`puppeth`で作ります。これは、Gethをインストールした時に付属しているはずです。
@@ -30,10 +27,10 @@ puppeth --help
 cd geth
 
 # 事前に１つアカウントを作っておきます
-# パスワードは空で大丈夫です
-# アドレスが表示されるので、メモしておきます
+# - パスワードは空で大丈夫です
+# - アドレスが表示されるので、メモしておきます
 geth --datadir . account new
-# --- display --- 
+# --- output --- 
 Password: 
 Repeat password: 
 
@@ -47,10 +44,9 @@ Path of the secret key file: keystore/UTC--2022-08-16T03-53-21.309842000Z--c8037
 - You must BACKUP your key file! Without the key, it's impossible to access account funds!
 - You must REMEMBER your password! Without the password, it's impossible to decrypt the key!
 
-
-# 設定ファイルの作成
+# 設定ファイルを作ります
 puppeth --network private
-# --- display --- 
+# --- output --- 
 What would you like to do? (default = stats)
  1. Show network stats
  2. Configure new genesis
@@ -118,7 +114,7 @@ INFO [08-16|11:05:53.148] Saved genesis chain spec                 client=harmon
 geth --datadir ./ init ./private.json
 ```
 
-では、ブロックチェーンを起動します。
+ブロックチェーンを起動します。
 ```sh
 geth --datadir ./ --networkid 15
 ```
@@ -128,7 +124,7 @@ geth --datadir ./ --networkid 15
 別のターミナルを開いて、Gethに接続します。
 ```sh
 geth attach geth.ipc
-# --- display --- 
+# --- output --- 
 # アカウントを表示します。最初に作ったアドレスが表示されるはずです
 > eth.accounts
 ["0xc8037cb594feb3d3454850d42cab0497dd04a134"]
@@ -142,7 +138,7 @@ true
 > eth.blockNumber
 0
 
-# マイニングを開始します。
+# ブロックの生成を開始します。
 > miner.start()
 null
 
@@ -157,7 +153,7 @@ null
 別のコーンソールを開いて、相手のアカウントを作ります。
 ```sh
 geth --datadir . account new
-# --- display --- 
+# --- output --- 
 INFO [08-16|11:48:18.836] Maximum peer count                       ETH=50 LES=0 total=50
 Your new account is locked with a password. Please give a password. Do not forget this password.
 Password: 
@@ -234,7 +230,7 @@ storage = storage.new({from: eth.accounts[0], data: compiled, gas: 1000000}, fun
 	if(!contract.address) { console.log("transaction send: transactionHash: " + contract.transactionHash); return; }
 	console.log("contract mined! address: " + contract.address);
 })
-# --- display --- 
+# --- output --- 
 transaction send: transactionHash: 0x171f42fa371ca2bdf23821aa7e06e2c4841d97f90d19762cd3aa967534d37292 # デプロイトランザクションのハッシュ
 {
   abi: [{
@@ -262,7 +258,7 @@ transaction send: transactionHash: 0x171f42fa371ca2bdf23821aa7e06e2c4841d97f90d1
 ```sh
 # "storage"という変数にコントラクトの情報が入っていることを確認します
 > storage
-# --- display --- 
+# --- output --- 
 {
   abi: [{
       inputs: [],
@@ -292,10 +288,14 @@ storage.store(123, {from: eth.accounts[0]}, function(err, result) {
 	if (err) { console.log(err); return; }
 	console.log("transaction hash: ", result);
 });
-# --- display --- 
+# --- output --- 
 transaction hash:  0x537c0a1d644ea357ad15e851f7a1207260d40b59391a7666ec79420b4d48a307
 
 # '123'が格納されたことを確認します。
 > storage.retrieve.call()
 123
+
+# ブロックの生成を停止します
+> miner.stop()
+null
 ```
