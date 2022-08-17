@@ -9,7 +9,8 @@
 ## 1. Remixを使ってみよう
 [Remix](https://remix-project.org/)はSolidityの統合開発環境です。
 ブラウザ上でコントラクトの動作確認ができます。
-デフォルトで入っているプロジェクトを通して、操作感を把握します。part1で使った[Storage.sol](../part1/Storage.sol)は、ここに入ってます。
+デフォルトで入っているプロジェクトを通して、操作感を把握します。
+part1で使った[Storage.sol](../part1/Storage.sol)は、デフォルトプロジェクトに入ってます。
 
 ## 2. Tokenコントラクトの仕様解説
 ERC20で規格されたTokenを簡略化した仕様のTokenを開発します。
@@ -24,44 +25,44 @@ ERC20で規格されたTokenを簡略化した仕様のTokenを開発します�
 4. 所有数がわかる
 5. Tokenを誰かに送れる
 
-こちらの５ステップが実行できるような、Tokenの基本的な機能を実装します。
+こちらの５ステップが実行できる基本的な機能を実装します。
 
-### 1. Tokenの名前がわかる
-- Token名を返す関数
+#### 1. Tokenの名前がわかる
+Token名を返す関数
 ```javascript
 function name() public view returns (string)
 ```
 
-### 2. 発行できる
-- 「誰(`account`)に対して、何枚(`amount`)発行する」ような関数
+#### 2. 発行できる
+「誰(`account`)に対して、何枚(`amount`)発行する」ような関数
 ```javascript
 function mint(address account, uint256 amount) public;
 ```
 
-### 3. 総発行数がわかる
-- Tokenの総発行量を返す
+#### 3. 総発行数がわかる
+Tokenの総発行量を返す
 ```javascript
 function totalSupply() public view returns (uint256)
 ```
 
-### 4. 所有数がわかる
-- 「誰(`account`)が、何枚Tokenを持っているか」を返す関数
+#### 4. 所有数がわかる
+「誰(`account`)が、何枚Tokenを持っているか」を返す関数
 ```javascript
 function balanceOf(address account) public view returns (uint256)
 ```
 
-### 5. Tokenを誰かに送れる
-- 「自分の所有するTokenを、誰(`to`)に対して、何枚(`amount`)を送る」ような関数
+#### 5. Tokenを誰かに送れる
+「自分の所有するTokenを、誰(`to`)に対して、何枚(`amount`)を送る」ような関数
 ```javascript
 function transfer(address to, uint256 amount) public
 ```
 
 ## 3. Tokenコントラクトの開発
-上の仕様を満たすコントラクトの例として、[Token.sol](./Token.sol)を開発します。
+上の仕様を満たすコントラクトの例として[Token.sol](./Token.sol)を開発します。
 Remixでワークスペースを新設して、コードを書いてみます。コンパイルが通ることを確認します。
 
 
 ## 4. 動かしてみよう
 Remix上で動作確認します。
-前回は、プライベートネット上にデプロイして動作確認をしました。こちらの方が実際の動作環境に近いですが、手間がかかるのが難点です。
+前回は、プライベートネット上にデプロイして動作確認をしました。こちらの方が実際の動作環境に近いですが、手間がかかることが難点です。
 今回は、ブラウザ上で動作する仮想的なスマートコントラクトの実行環境（`Remix VM`）を使います。何といっても「deploy」ボタンを押すだけという手軽さが魅力です。
