@@ -16,15 +16,15 @@ Ethereumのテストネットはいくつか存在します。The Merge後に多
 [NETWORKS](https://ethereum.org/en/developers/docs/networks/)
 
 - Sepolia
- - proof-of-workなテストネット。2022年夏頃にproof-of-stakeへ移行予定。長期間にわたってメンテナンスされてゆくかは未定
+  - proof-of-workなテストネット。2022年夏頃にproof-of-stakeへ移行予定。長期間にわたってメンテナンスされてゆくかは未定
 - Goerli
- - proof-of-authorityなテストネット。2022年夏頃にテストネットとしては最後にproof-of-stakeに移行予定。長期間にわたってメンテナンスされてゆく予定
+  - proof-of-authorityなテストネット。2022年夏頃にテストネットとしては最後にproof-of-stakeに移行予定。長期間にわたってメンテナンスされてゆく予定
 - Ropsten (非推奨)
- - proof-of-workなテストネットでしたが、2022年5月にproof-of-stakeに移行した。更新はされないため非推奨
+  - proof-of-workなテストネットでしたが、2022年5月にproof-of-stakeに移行した。更新はされないため非推奨
 - Rinkeby (非推奨)
- - proof-of-authorityなテストネット。古いバージョンのGethで運用されており、更新はされないため非推奨
+  - proof-of-authorityなテストネット。古いバージョンのGethで運用されており、更新はされないため非推奨
 - Kovan (非推奨)
- - とても古いproof-of-authorityなテストネット。更新はされないため非推奨。
+  - とても古いproof-of-authorityなテストネット。更新はされないため非推奨。
 
 [GoerliのFaucet](https://goerli-faucet.mudit.blog/)からテスト用のETHを取得します。
 
