@@ -26,7 +26,8 @@ Ethereumのテストネットはいくつか存在します。The Merge後に多
 - Kovan (非推奨)
   - とても古いproof-of-authorityなテストネット。更新はされないため非推奨。
 
-[GoerliのFaucet](https://goerli-faucet.mudit.blog/)からテスト用のETHを取得します。
+[GoerliのFaucet(POW)](https://goerli-faucet.pk910.de/)からテスト用のETHを取得します。
+[POS移行後](https://goerli-faucet.mudit.blog/)
 
 ## 3. Tokenをテストネットにデプロイしてみる
 前回開発した[Token.sol](../part2/Token.sol)をGoerliにデプロイします。
