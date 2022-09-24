@@ -1,0 +1,11 @@
+{
+  "description": "ガス代を肩代わりするmeta transactionのRelayerを作ってみる",
+  "scripts": {
+    "sign": "node sign.js"
+  },
+  "author": "tak<re795h@gmail.com>",
+  "license": "Apache License 2.0",
+  "dependencies": {
+    "web3": "^1.8.0"
+  }
+}
