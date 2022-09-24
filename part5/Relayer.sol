@@ -4,7 +4,7 @@ pragma solidity >=0.7.0 <0.9.0;
 
 contract Relayer {
 
-    function proxy(
+    function execute(
         address to,
         address sender,
         bytes calldata data,
