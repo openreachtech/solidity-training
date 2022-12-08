@@ -6,7 +6,7 @@ import "github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.7.3/contracts/tok
 
 contract LiquidityToken is ERC20 {
 
-    address public factory;
+    address public dex;
 
     // このLPトークンのトークンペア
     address public token0;
@@ -27,11 +27,11 @@ contract LiquidityToken is ERC20 {
     );
 
     constructor() ERC20("LiquidityToken", "LPT") {
-        factory = msg.sender;
+        dex = msg.sender;
     }
 
     function initialize(address _token0, address _token1) public {
-        require(msg.sender == factory, "unauthorized. only factory can call");
+        require(msg.sender == dex, "unauthorized. only dex can call");
         token0 = _token0;
         token1 = _token1;
     }
