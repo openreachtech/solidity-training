@@ -50,9 +50,12 @@ contract LiquidityToken is ERC20 {
         uint totalSupply = totalSupply();
         if (totalSupply == 0) {
             // 新規にLPトークンを発行する場合
+            // 両者を掛けたものの二乗根
             liquidity = sqrt(amount0 * amount1);
         } else {
             // 追加で発行する場合
+            // 新たに供給される流動性の量と、供給されている流動性の比率にLPトークンの総量を掛ける
+            // minの両式は基本的に同じ値を返すが、少数以下の演算で誤差が生じる場合があるためか最小値を取る形にしている
             liquidity = min(amount0 * totalSupply / reserve0, amount1 * totalSupply / reserve1);
         }
         require(liquidity > 0, "insufficient liquidity minted");

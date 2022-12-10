@@ -85,10 +85,6 @@ contract SimpleDEX {
         require(token0 != address(0), "one of token is zero address");
     }
 
-    function quote(uint amountA, uint reserveA, uint reserveB) internal pure returns (uint amountB) {
-        amountB = amountA * reserveB / reserveA;
-    }
-
     function _addLiquidity(
         address token0,
         address token1,
@@ -110,11 +106,11 @@ contract SimpleDEX {
         } else if (amount0Desired > 0) {
             // token0のamountが指定されたら
             amount0 = amount0Desired;
-            amount1 = quote(amount0, reserve0, reserve1);
+            amount1 = amount0 * reserve1 / reserve0;
         } else if (amount1Desired > 0) {
             // token1のamountが指定されたら
             amount1 = amount1Desired;
-            amount0 = quote(amount1Desired, reserve1, reserve0);
+            amount0 = amount1 * reserve0 / reserve1;
         } else {
             revert("no desired amount");
         }
