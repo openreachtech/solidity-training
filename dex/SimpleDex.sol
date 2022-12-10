@@ -62,7 +62,9 @@ contract SimpleDEX {
         { // ローカル変数が多いと”stack too deep”になるので、避ける
             (uint reserve0, uint reserve1) = LiquidityToken(lptoken).getReserves();
             (uint reserveIn, uint reserveOut) = (tokenA == token0 && swapsTokenA) || (tokenA != token0 && !swapsTokenA) ?  (reserve0, reserve1) : (reserve1, reserve0);
-            amountOut = amountIn * reserveOut / reserveIn;
+            // 供給する流動性の内、0.3%分は手数料として徴収される
+            uint amountInWithFee = amountIn * 997;
+            amountOut = amountInWithFee * reserveOut / (reserveIn * 1000 + amountInWithFee);
         }
 
         if (swapsTokenA) IERC20(tokenA).transferFrom(msg.sender, lptoken, amountIn);
