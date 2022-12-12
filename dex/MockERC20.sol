@@ -11,4 +11,9 @@ contract MockERC20 is ERC20 {
     function mint(address account, uint256 amount) public {
         _mint(account, amount);
     }
+
+    // decimalは”0”にしておく
+    function decimals() public pure override returns (uint8) {
+        return 0;
+    }
 }

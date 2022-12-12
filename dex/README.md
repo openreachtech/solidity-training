@@ -93,63 +93,25 @@ DEXコントラクトの主要な関数はこちらです。
 ## 5. DEXの動作確認
 それでは、実際にコントラクトをデプロイして、一連の関数の動作確認をしてみます。
 
-#### version 1のBankコントラクト
+1. コントラクトのデプロイ
+    - WETHとDAIに当たる２つの[ERC20](./MockERC20.sol)をデプロイします。
+        - Deployerにそれぞれ、1億をmintします。
+    - [Dexコントラクト](./SimpleDex.sol)をデプロイします。
 
-version 1のBankコントラクトの機能としては「バンク名を変更できる」「お金を入金できる」とします。
-```solidity
-contract BankV1 {
+3. 流動性の供給
+    - mintした全量をDEXコントラクトに対してApproveします。
+    - 初期の流動性としてWETHを10枚、DAIを100万供給します。つまり、ETHの価格が10万DAIの場合です。
+        - LPトークンが`3162`枚発行されます
 
-    string public name;
+4. トレード
+    - 別のアカウントにETHをmintします
+    - DEXコントラクトをApproveします
+    - 1WETHを売ってDAIを買うトレードを行います。
+      - 手数料が徴収されて`90661`DAIを受け取ります
+    - 全く同じトレードをもう一度行います。
+      - すると、`75569`DAIを受けとりました。ETHの価格が下落していることがわかります。
 
-    uint256 public totalBalance;
-
-    mapping(address => BankAccount) public bankAccounts;
-
-    struct BankAccount {
-        uint256 balance;
-    }
-
-    function setName(string memory newName) public {
-        name = newName;
-    }
-
-    function deposit() public payable {
-        totalBalance += msg.value;
-        bankAccounts[msg.sender].balance = msg.value;
-    }
-}
-```
-
-#### version 2のBankコントラクト
-version2で「お金を引き出せる」機能を追加します。
-```solidity
-contract BankV2 {
-    ...
-    function withdraw(uint256 amount) public {
-        require(amount <bankAccounts[msg.sender].balance, "insufficient balance");
-
-        bankAccounts[msg.sender].balance -= amount;
-        payable(msg.sender).transfer(amount);
-
-        totalBalance -= amount;
-    }
-}
-```
-
-### アップブレード手順
-1. BankV1コントラクトをデプロイし、そのアドレスを引数にUpgradeProxyをデプロイします
-2. 各種calldataを作ります
-    - `calldata.js`にそれぞれのcalldataを生成するコードを記述しました。`node calldata.js`実行するとコンソールに表示されます。
-3. バンクに"piggy bank"という名前をセットします
-    - `setName`のコールデータをUpgradeProxyコントラクトで実行します
-4. バンクに"20 ETH"を入金します
-    - `deposit`のコールデータをUpgradeProxyコントラクトで実行します。この際、20ETHも一緒に送ります。
-5. 実行結果の確認するために、UpgradeProxyコントラクトのアドレスでBankV1コントラクトを作ります
-    - `name`, `totalBalance`, `bankAccounts`をそれぞれ実行し、期待する値であることを確認します
-6. BankV2をデプロイし、UpgradeProxyコントラクトのロジックをBankV2にアップグレードします
-    - UpgradeProxyコントラクトの`upgradeTo`にデプロイしたBankV2のアドレスを指定します
-7. バンクから10 ETHを引き出します
-    - `withdraw`のコールデータをUpgradeProxyコントラクトで実行します
-    - 10 ETH分、戻ってくることを確認します
-8. 実行結果の確認するために、UpgradeProxyコントラクトのアドレスでBankV2コントラクトを作ります
-    - `totalBalance`, `bankAccounts`をそれぞれ実行し、期待する値であることを確認します
+5. 流動性の引き抜き
+　　- DEXコントラクトに対して、LPトークンをApproveします
+   - 半分の流動性(`1581`)を引き抜きます。
+      - `6`WETHと`416885`DAIを受け取ります。
