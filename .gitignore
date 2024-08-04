@@ -103,4 +103,9 @@ dist
 # TernJS port file
 .tern-port
 
+# part1
+geth/
+keystore/
+password.txt
+
 .DS_Store
